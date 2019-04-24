@@ -22,14 +22,14 @@ export class AppComponent implements OnInit{
       'gender': new FormControl('male'),
       'hobbies': new FormArray([])
     });
-
+    // Subscribe to changes in value and status of the form:
     this.signupForm.valueChanges.subscribe(
       (value) => console.log(value)
     );
     this.signupForm.statusChanges.subscribe(
       (status) => console.log(status)
     );
-
+    // Set or patch all or some of the values of the form:
     this.signupForm.setValue({
       'userData': {
         'username': 'Max',
@@ -47,14 +47,14 @@ export class AppComponent implements OnInit{
 
   onSubmit() {
     console.log(this.signupForm);
-    this.signupForm.reset({'gender': 'male'}); // you can reset to specific values mentioned in the arguments
+    this.signupForm.reset({'gender': 'male'}); // Reset to specific values mentioned in the arguments
   }
-
+  // Add additional input fields:
   onAddHobby() {
     const control = new FormControl(null, Validators.required);
     (<FormArray>this.signupForm.get('hobbies')).push(control);
   }
-
+  // Custom validators for username and email:
   forbiddenNames(control: FormControl): {[s: string]: boolean} {
     if (this.forbiddenUserNames.indexOf(control.value) !== -1) {
       return {'nameIsForbidden': true};
